@@ -3,9 +3,19 @@
 Base Docker image which includes minimal shared libraries for GHC-compiled executables.
 For more information, see [Haskell Web Server in a 5MB Docker Image](https://www.fpcomplete.com/blog/2015/05/haskell-web-server-in-5mb).
 
-__NOTE__: Many people have sent pull requests to increase the scope of this image.
-While changes will almost certainly be necessary to this image for most real-world
-applications, adding them to the base image defeats its purpose as an example of
-a minimalistic scratch image. Such additional features should rather go in
-separate images. Consider the requirements of this image to be able to successfully
-run a "hello world" GHC statically-compiled application.
+I put all necessary files under **root** directory. 
+
+To build the image:
+
+- run ```make``` to build **integer-gmp and integer-simple** images
+- make sure that you are logged into a docker registry. default registry in make file is dockerhub.
+- run ```make push``` to push image with tags **integer-gmp**, **integer-simple** and **latest** as **integer-simple**. ```make push``` pushes image to **skydome** dockerhub account, feel free to change before pushing.
+
+A sample **Dockerfile** using **skydome/haskell-scratch** image:
+
+```
+FROM skydome/haskell-scratch:integer-gmp
+
+COPY ./mybinary /bin/
+```
+
